@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- CORE SETTINGS --- */
+        /* --- 1. SETTINGS & COLORS --- */
         :root {
-            --primary: #d6336c; /* Pink-Red */
-            --secondary: #ff99ac; /* Soft Pink */
-            --bg: #fff0f3;
+            --primary: #d6336c; /* Deep Pink */
+            --secondary: #ff99ac; /* Light Pink */
+            --bg: #fff0f3; /* Very Light Background */
             --text: #4a4a4a;
             --font-hand: 'Dancing Script', cursive;
             --font-main: 'Playfair Display', serif;
@@ -28,12 +28,12 @@
             text-align: center;
         }
 
-        /* --- ANIMATIONS --- */
+        /* --- 2. ANIMATIONS --- */
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
         @keyframes slideUp { 0% { opacity: 0; transform: translateY(50px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
-        /* --- HERO SECTION --- */
+        /* --- 3. HERO SECTION --- */
         header {
             min-height: 100vh;
             display: flex;
@@ -67,7 +67,7 @@
             animation: float 2s infinite;
         }
 
-        /* --- TIMER SECTION --- */
+        /* --- 4. TIMER SECTION --- */
         .timer-box {
             background: white;
             margin: 50px auto;
@@ -101,7 +101,7 @@
             color: var(--primary);
         }
 
-        /* --- GALLERY SECTION (POLAROIDS) --- */
+        /* --- 5. GALLERY SECTION (POLAROIDS) --- */
         .gallery {
             padding: 50px 20px;
             background: white;
@@ -138,7 +138,7 @@
             width: 100%;
             height: 300px;
             object-fit: cover;
-            background: #eee; /* Grey background if image fails */
+            background: #eee;
         }
 
         .polaroid p {
@@ -148,7 +148,7 @@
             color: #444;
         }
 
-        /* --- QUOTES LIST --- */
+        /* --- 6. QUOTES LIST --- */
         .quotes-section {
             padding: 60px 20px;
             background: var(--bg);
@@ -163,11 +163,12 @@
             background: rgba(255,255,255,0.7);
             border-radius: 0 10px 10px 0;
             text-align: left;
+            font-style: italic;
         }
 
-        /* --- THE TRUTH SECTION (FINALE) --- */
+        /* --- 7. THE TRUTH SECTION (FINALE) --- */
         .finale {
-            min-height: 80vh; /* Make sure it takes up space */
+            min-height: 80vh;
             background: #222;
             color: white;
             display: flex;
@@ -199,7 +200,7 @@
             font-weight: bold;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
             transition: all 0.3s;
-            z-index: 100; /* Force it on top */
+            z-index: 100;
         }
 
         .truth-btn:hover { transform: scale(1.1); }
@@ -218,7 +219,7 @@
             animation: slideUp 1s ease;
         }
 
-        /* Mobile Fixes */
+        /* Mobile Adjustments */
         @media (max-width: 600px) {
             h1 { font-size: 3.5rem; }
             .final-text { font-size: 2.5rem; }
@@ -247,7 +248,7 @@
             
             <div class="polaroid">
                 <img src="pic 1.jpg" onerror="this.src='https://placehold.co/600x600/pink/white?text=Add+pic1.jpg'" alt="Memory 1">
-                <p> The Smilee❤️</p>
+                <p>The Smile ❤️</p>
             </div>
 
             <div class="polaroid">
@@ -257,7 +258,7 @@
 
             <div class="polaroid">
                 <img src="pic 3.jpg" onerror="this.src='https://placehold.co/600x600/pink/white?text=Add+pic3.jpg'" alt="Memory 3">
-                <p>My Happiness</p>
+                <p>Happiness</p>
             </div>
 
         </div>
@@ -293,20 +294,16 @@
     </section>
 
     <script>
-        // 1. DATE SETUP (CHANGE THIS)
-        // Year, Month (0 = Jan, 1 = Feb, etc.), Day
+        // --- CONFIGURATION ---
+        // Change this date to your anniversary (Year, Month-1, Day)
+        // Example: February 14, 2023 -> (2023, 1, 14)
         const startDate = new Date(2025, 5, 18); 
 
-        // 2. TIMER LOGIC
+        // --- TIMER LOGIC ---
         function updateTimer() {
             const now = new Date();
             const diff = now - startDate;
             
-            if (diff < 0) {
-                document.getElementById('timer').innerHTML = "<div class='time-unit'>Future Date!</div>";
-                return;
-            }
-
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
             const minutes = Math.floor((diff / 1000 / 60) % 60);
@@ -319,22 +316,21 @@
                 <div class="time-unit"><span>${seconds}</span>Secs</div>
             `;
         }
-        
-        // Start timer immediately
         setInterval(updateTimer, 1000);
-        updateTimer();
+        updateTimer(); // Run once immediately
 
-        // 3. TRUTH BUTTON LOGIC
+        // --- TRUTH REVEAL LOGIC ---
         function showTruth() {
-            // Hide button
+            // Hide the button
             document.querySelector('.truth-btn').style.display = 'none';
-            // Show message
+            // Show the message
             document.getElementById('hidden-message').style.display = 'block';
             
-            // Create Confetti
+            // Launch Confetti
             createConfetti();
         }
 
+        // --- CONFETTI LOGIC ---
         function createConfetti() {
             for(let i=0; i<50; i++) {
                 const heart = document.createElement('div');
@@ -347,11 +343,13 @@
                 heart.style.zIndex = '9999';
                 document.body.appendChild(heart);
 
+                // Animate upwards
                 setTimeout(() => {
                     heart.style.top = '-100px';
                     heart.style.transform = `rotate(${Math.random() * 360}deg)`;
                 }, 100);
 
+                // Remove after animation
                 setTimeout(() => { heart.remove(); }, 3000);
             }
         }
