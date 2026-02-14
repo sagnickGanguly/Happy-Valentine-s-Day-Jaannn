@@ -4,354 +4,482 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Rasamalai ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Parisienne&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- 1. SETTINGS & COLORS --- */
         :root {
-            --primary: #d6336c; /* Deep Pink */
-            --secondary: #ff99ac; /* Light Pink */
-            --bg: #fff0f3; /* Very Light Background */
-            --text: #4a4a4a;
+            --primary: #c75a5a; /* Muted Red */
+            --accent: #d4a5a5;  /* Dusty Pink */
+            --paper: #fff9f0;   /* Cream Paper */
+            --text: #4a3b3b;    /* Dark Brown */
+            --font-main: 'Cormorant Garamond', serif;
             --font-hand: 'Dancing Script', cursive;
-            --font-main: 'Playfair Display', serif;
+            --font-sig: 'Parisienne', cursive;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
+            background-color: #f7e7e6;
             color: var(--text);
             font-family: var(--font-main);
             overflow-x: hidden;
-            text-align: center;
+            scroll-behavior: smooth;
         }
 
-        /* --- 2. ANIMATIONS --- */
-        @keyframes popIn { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
-        @keyframes slideUp { 0% { opacity: 0; transform: translateY(50px); } 100% { opacity: 1; transform: translateY(0); } }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        /* --- Background Animation (Subtle Grain) --- */
+        .bg-texture {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            opacity: 0.5;
+            z-index: -1;
+            pointer-events: none;
+        }
 
-        /* --- 3. HERO SECTION --- */
-        header {
+        /* --- FIXED ANIMATIONS (Visible by default) --- */
+        .fade-in {
+            animation: fadeIn 2s ease forwards;
+        }
+
+        /* --- Section 1: Hero --- */
+        .hero {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle at center, #ffe0e6 0%, #fff0f3 100%);
+            text-align: center;
             padding: 20px;
         }
 
-        h1 {
-            font-family: var(--font-hand);
-            font-size: 4.5rem;
+        .hero-title {
+            font-family: var(--font-sig);
+            font-size: 5rem;
             color: var(--primary);
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-            animation: popIn 1.5s ease;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
             line-height: 1.2;
         }
 
-        .subtitle {
+        .hero-subtitle {
             font-size: 1.5rem;
-            margin-top: 20px;
-            color: #666;
-            animation: slideUp 2s ease;
+            margin-top: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
-        .scroll-hint {
+        .scroll-down {
             margin-top: 50px;
+            animation: bounce 2s infinite;
             font-size: 2rem;
             color: var(--primary);
-            animation: float 2s infinite;
+            cursor: pointer;
         }
 
-        /* --- 4. TIMER SECTION --- */
-        .timer-box {
-            background: white;
-            margin: 50px auto;
-            padding: 30px;
+        /* --- Section 2: The Timeline --- */
+        .story-section {
+            padding: 80px 20px;
             max-width: 800px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(214, 51, 108, 0.15);
-            width: 90%;
-            border: 2px dashed var(--secondary);
+            margin: 0 auto;
         }
 
-        .timer-grid {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+        .paper-card {
+            background: var(--paper);
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+            /* Hand-torn paper effect */
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            border: 1px solid rgba(0,0,0,0.02);
+            position: relative;
         }
 
-        .time-unit {
-            background: var(--bg);
-            padding: 15px;
-            border-radius: 10px;
-            min-width: 80px;
-        }
-
-        .time-unit span {
-            display: block;
-            font-size: 2rem;
-            font-weight: bold;
+        .paper-card::before {
+            content: '♥';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
             color: var(--primary);
+            background: #f7e7e6;
+            padding: 0 10px;
         }
 
-        /* --- 5. GALLERY SECTION (POLAROIDS) --- */
-        .gallery {
-            padding: 50px 20px;
-            background: white;
-        }
-
-        .gallery-title {
+        .timer-display {
+            font-size: 2.2rem;
             font-family: var(--font-hand);
-            font-size: 3rem;
-            margin-bottom: 40px;
             color: var(--primary);
+            text-align: center;
+            margin: 20px 0;
+            line-height: 1.4;
         }
 
+        /* --- Section 3: The Gallery (Tilted Stack) --- */
         .gallery-grid {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 40px;
+            padding: 50px 0;
         }
 
-        .polaroid {
+        .photo-frame {
+            width: 280px;
             background: white;
             padding: 15px 15px 50px 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            width: 300px;
-            transform: rotate(-2deg);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             transition: transform 0.3s;
-            border: 1px solid #eee;
+            cursor: pointer;
         }
 
-        .polaroid:nth-child(even) { transform: rotate(2deg); }
-        .polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
+        .photo-frame:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            z-index: 10;
+        }
 
-        .polaroid img {
+        /* Fallback background color if image is missing */
+        .photo-frame img {
             width: 100%;
             height: 300px;
             object-fit: cover;
-            background: #eee;
+            background: #eee; 
+            filter: sepia(20%); /* Vintage look */
         }
 
-        .polaroid p {
-            margin-top: 15px;
+        .photo-caption {
             font-family: var(--font-hand);
             font-size: 1.5rem;
-            color: #444;
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
         }
 
-        /* --- 6. QUOTES LIST --- */
-        .quotes-section {
-            padding: 60px 20px;
-            background: var(--bg);
+        /* --- Section 4: Quotes List --- */
+        .quotes-list {
+            padding: 50px 0;
+            text-align: center;
         }
 
-        .quote-item {
-            font-size: 1.3rem;
-            margin: 30px auto;
-            max-width: 700px;
+        .single-quote {
+            font-size: 1.6rem;
+            margin: 40px 0;
             padding: 20px;
-            border-left: 4px solid var(--primary);
-            background: rgba(255,255,255,0.7);
-            border-radius: 0 10px 10px 0;
-            text-align: left;
             font-style: italic;
+            color: #555;
+            border-bottom: 1px dashed var(--accent);
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* --- 7. THE TRUTH SECTION (FINALE) --- */
+        /* --- Section 5: Interactive Promises --- */
+        .promise-section {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .checklist {
+            display: inline-block;
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .promise-item {
+            font-size: 1.4rem;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: color 0.3s;
+            display: block;
+        }
+
+        .promise-item input {
+            display: none;
+        }
+
+        .promise-item span::before {
+            content: '☐';
+            margin-right: 10px;
+            font-size: 1.6rem;
+        }
+
+        .promise-item input:checked + span::before {
+            content: '☑';
+            color: var(--primary);
+        }
+
+        .promise-item input:checked + span {
+            text-decoration: line-through;
+            color: var(--accent);
+        }
+
+        /* --- Section 6: The Envelope --- */
+        .envelope-container {
+            display: flex;
+            justify-content: center;
+            margin: 80px 0;
+            perspective: 1000px;
+            height: 250px; /* Force height */
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: #d45a5a;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.5s;
+            z-index: 10;
+        }
+
+        .envelope:hover { transform: scale(1.05); }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0; 
+            height: 0; 
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #a33;
+            transform-origin: top;
+            transition: transform 0.5s;
+            z-index: 20;
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .letter-paper {
+            position: absolute;
+            width: 250px;
+            height: 180px;
+            background: white;
+            top: 10px;
+            transition: transform 0.5s 0.5s;
+            z-index: 5;
+            padding: 20px;
+            font-family: var(--font-hand);
+            font-size: 1.2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .envelope.open .letter-paper {
+            transform: translateY(-120px);
+            z-index: 30; /* Bring to front */
+        }
+
+        /* --- Section 7: Finale --- */
         .finale {
             min-height: 80vh;
-            background: #222;
-            color: white;
+            background: black;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 50px 20px;
+            color: white;
             position: relative;
-        }
-
-        .heart-beat {
-            font-size: 80px;
-            color: #ff4d6d;
-            animation: beat 1s infinite;
-            margin-bottom: 30px;
-        }
-
-        @keyframes beat { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
-
-        .truth-btn {
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            background: white;
-            color: #d6336c;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: var(--font-main);
-            font-weight: bold;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            transition: all 0.3s;
-            z-index: 100;
-        }
-
-        .truth-btn:hover { transform: scale(1.1); }
-
-        #hidden-message {
-            display: none; /* Hidden by default */
-            margin-top: 30px;
+            padding: 50px 20px;
             text-align: center;
         }
 
-        .final-text {
-            font-family: 'Sacramento', cursive;
-            font-size: 4rem;
-            color: #ff8fa3;
-            line-height: 1.5;
-            animation: slideUp 1s ease;
+        .finale-btn {
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+            z-index: 50;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            h1 { font-size: 3.5rem; }
-            .final-text { font-size: 2.5rem; }
-            .polaroid { width: 90%; }
+        .finale-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        #final-text {
+            display: none; /* Hidden initially */
+            font-family: var(--font-sig);
+            font-size: 4rem;
+            background: -webkit-linear-gradient(#fff, #ff9a9e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.5;
+            z-index: 10;
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from {opacity:0; transform: translateY(20px);} to {opacity:1; transform: translateY(0);} }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+        
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3.5rem; }
+            .paper-card { padding: 20px; }
+            #final-text { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Happy Valentine's<br>Day My Love</h1>
-        <div class="subtitle">A little website just for us.</div>
-        <div class="scroll-hint">↓</div>
-    </header>
+    <div class="bg-texture"></div>
 
-    <section class="timer-box">
-        <h2>We have been together for:</h2>
-        <div class="timer-grid" id="timer">
-            <div class="time-unit">Loading...</div>
+    <section class="hero fade-in">
+        <div class="hero-title">Happy Valentine's</div>
+        <div class="hero-subtitle">To the girl who owns my heart</div>
+        <div class="scroll-down">↓</div>
+    </section>
+
+    <section class="story-section">
+        <div class="paper-card">
+            <h2 style="text-align: center; font-family: var(--font-hand); margin-bottom: 20px;">Our Time Together</h2>
+            <p style="text-align: center; font-size: 1.2rem;">Every second with you is a memory I cherish. We have been creating magic for:</p>
+            <div class="timer-display" id="timer">Calculating Love...</div>
+        </div>
+
+        <div class="paper-card">
+            <h2 style="text-align: center; font-family: var(--font-hand); margin-bottom: 20px;">Why You?</h2>
+            <p style="font-size: 1.3rem; line-height: 1.8; text-align: justify;">
+                Because you are the calm in my storm. Because you laugh at my bad jokes. Because looking at you makes me realize that perfection actually exists. You aren't just my girlfriend; you are my best friend, my partner in crime, and my greatest adventure.
+            </p>
         </div>
     </section>
 
-    <section class="gallery">
-        <div class="gallery-title">Our Best Moments</div>
-        <div class="gallery-grid">
-            
-            <div class="polaroid">
-                <img src="pic 1.jpg" onerror="this.src='https://placehold.co/600x600/pink/white?text=Add+pic1.jpg'" alt="Memory 1">
-                <p>The Smile ❤️</p>
-            </div>
-
-            <div class="polaroid">
-                <img src="pic 2.jpg" onerror="this.src='https://placehold.co/600x600/pink/white?text=Add+pic2.jpg'" alt="Memory 2">
-                <p>My Favorite View</p>
-            </div>
-
-            <div class="polaroid">
-                <img src="pic 3.jpg" onerror="this.src='https://placehold.co/600x600/pink/white?text=Add+pic3.jpg'" alt="Memory 3">
-                <p>Happiness</p>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="quotes-section">
-        <h2 style="font-family: var(--font-hand); font-size: 3rem; color: var(--primary);">Why I Love You</h2>
+    <section class="story-section">
+        <h2 style="text-align: center; font-size: 3rem; font-family: var(--font-sig); color: var(--primary);">Moments Frozen in Time</h2>
         
-        <div class="quote-item">"In all the world, there is no heart for me like yours."</div>
-        <div class="quote-item">"I swear I couldn't love you more than I do right now, and yet I know I will tomorrow."</div>
-        <div class="quote-item">"You are my sun, my moon, and all my stars."</div>
-        <div class="quote-item">"Whatever our souls are made of, yours and mine are the same."</div>
-        <div class="quote-item">"When I look at you, I see the rest of my life in front of my eyes."</div>
-        <div class="quote-item">"You make me the happiest person alive, simply by existing."</div>
-        <div class="quote-item">"I choose you. And I'll choose you over and over."</div>
-        <div class="quote-item">"Thinking of you keeps me awake. Dreaming of you keeps me asleep."</div>
-        <div class="quote-item">"You are the finest, loveliest, tenderest person I have ever known."</div>
-        <div class="quote-item">"I love you more than words can say."</div>
+        <div class="gallery-grid">
+            <div class="photo-frame" style="transform: rotate(-3deg);">
+                <img src="pic 1.jpg" onerror="this.src='https://placehold.co/600x600/pink/white?text=Add+pic1.jpg'" alt="Us">
+                <div class="photo-caption">The Smilee...</div>
+            </div>
+            
+            <div class="photo-frame" style="transform: rotate(2deg); margin-top: 30px;">
+                <img src="pic 2.jpg" onerror="this.src='https://placehold.co/600x600/pink/white?text=Add+pic2.jpg'" alt="Us">
+                <div class="photo-caption">My World</div>
+            </div>
+
+            <div class="photo-frame" style="transform: rotate(-2deg);">
+                <img src="pic 3.jpg" onerror="this.src='https://placehold.co/600x600/pink/white?text=Add+pic3.jpg'" alt="Us">
+                <div class="photo-caption">Forever & Always</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quotes-list">
+        <div class="paper-card" style="max-width: 900px; margin: 0 auto; background: #fff;">
+            <h2 style="font-family: var(--font-sig); font-size: 3rem; color: var(--primary); margin-bottom: 30px;">Things I want to tell you</h2>
+            
+            <div class="single-quote">"If I had a flower for every time I thought of you... I could walk through my garden forever."</div>
+            <div class="single-quote">"I swear I couldn't love you more than I do right now, and yet I know I will tomorrow."</div>
+            <div class="single-quote">"You are my heart, my life, my one and only thought."</div>
+            <div class="single-quote">"I love you not only for what you are, but for what I am when I am with you."</div>
+            <div class="single-quote">"In all the world, there is no heart for me like yours."</div>
+            <div class="single-quote">"You are the finest, loveliest, tenderest, and most beautiful person I have ever known."</div>
+            <div class="single-quote">"My love for you has no depth, its boundaries are ever-expanding."</div>
+            <div class="single-quote">"Every love story is beautiful, but ours is my favorite."</div>
+            <div class="single-quote">"I choose you. And I'll choose you over and over. Without pause, without a doubt, in a heartbeat."</div>
+            <div class="single-quote">"You are my today and all of my tomorrows."</div>
+            <div class="single-quote">"When I look at you, I see the rest of my life in front of my eyes."</div>
+        </div>
+    </section>
+
+    <section class="promise-section">
+        <h2 style="font-family: var(--font-hand); font-size: 3rem;">My Promises to You</h2>
+        <p style="font-size: 1.1rem; color: #777;">(Click to accept them)</p>
+        
+        <div class="checklist">
+            <label class="promise-item"><input type="checkbox"> <span>To always make you laugh when you're sad.</span></label><br>
+            <label class="promise-item"><input type="checkbox"> <span>To listen to your stories (even the boring ones).</span></label><br>
+            <label class="promise-item"><input type="checkbox"> <span>To give you the last slice of pizza.</span></label><br>
+            <label class="promise-item"><input type="checkbox"> <span>To love you more every single day.</span></label><br>
+            <label class="promise-item"><input type="checkbox"> <span>To never stop trying to impress you.</span></label><br>
+        </div>
+    </section>
+
+    <section style="text-align: center; padding: 50px;">
+        <h2 style="margin-bottom: 20px;">A Special Note</h2>
+        <div class="envelope-container">
+            <div class="envelope" onclick="this.classList.toggle('open')">
+                <div class="envelope-flap"></div>
+                <div class="letter-paper">
+                    <p>To my everything,</p>
+                    <p>Thank you for making my life magical.</p>
+                    <p>Tap here to close ❤️</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section class="finale">
-        <div class="heart-beat">❤️</div>
+        <button class="finale-btn" onclick="triggerFinale(this)">Click for the Truth</button>
         
-        <button class="truth-btn" onclick="showTruth()">Click for the Truth</button>
-        
-        <div id="hidden-message">
-            <div class="final-text">
-                I love you<br>
-                meriiii rasamalaiiiiiiiii<br>
-                😚😚❤️❤️
-            </div>
+        <div id="final-text">
+            I love you<br>
+            meriiii rasamalaiiiiiiiii<br>
+            😚😚❤️❤️
         </div>
     </section>
 
     <script>
-        // --- CONFIGURATION ---
-        // Change this date to your anniversary (Year, Month-1, Day)
-        // Example: February 14, 2023 -> (2023, 1, 14)
-        const startDate = new Date(2025, 5, 18); 
+        // --- 1. CONFIGURATION ---
+        const startDate = new Date(2025, 5, 18); // Year, Month (0-11), Day
 
-        // --- TIMER LOGIC ---
+        // --- 2. TIMER ---
         function updateTimer() {
             const now = new Date();
             const diff = now - startDate;
-            
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
             const minutes = Math.floor((diff / 1000 / 60) % 60);
             const seconds = Math.floor((diff / 1000) % 60);
-
-            document.getElementById('timer').innerHTML = `
-                <div class="time-unit"><span>${days}</span>Days</div>
-                <div class="time-unit"><span>${hours}</span>Hours</div>
-                <div class="time-unit"><span>${minutes}</span>Mins</div>
-                <div class="time-unit"><span>${seconds}</span>Secs</div>
-            `;
+            document.getElementById('timer').innerText = 
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
         setInterval(updateTimer, 1000);
-        updateTimer(); // Run once immediately
+        updateTimer(); // Run once instantly
 
-        // --- TRUTH REVEAL LOGIC ---
-        function showTruth() {
-            // Hide the button
-            document.querySelector('.truth-btn').style.display = 'none';
-            // Show the message
-            document.getElementById('hidden-message').style.display = 'block';
+        // --- 3. FINALE EXPLOSION ---
+        function triggerFinale(btn) {
+            btn.style.display = 'none';
+            const text = document.getElementById('final-text');
+            text.style.display = 'block'; // Fixed: visible immediately
             
             // Launch Confetti
-            createConfetti();
+            for(let i=0; i<50; i++) {
+                createConfetti();
+            }
         }
 
-        // --- CONFETTI LOGIC ---
         function createConfetti() {
-            for(let i=0; i<50; i++) {
-                const heart = document.createElement('div');
-                heart.innerHTML = '❤️';
-                heart.style.position = 'fixed';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.top = '100vh';
-                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                heart.style.transition = 'all 3s ease-out';
-                heart.style.zIndex = '9999';
-                document.body.appendChild(heart);
+            const heart = document.createElement('div');
+            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '😚';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = Math.random() * 30 + 10 + 'px';
+            heart.style.transition = `all ${Math.random() * 2 + 1}s ease-out`;
+            heart.style.zIndex = 1000;
+            document.body.appendChild(heart);
 
-                // Animate upwards
-                setTimeout(() => {
-                    heart.style.top = '-100px';
-                    heart.style.transform = `rotate(${Math.random() * 360}deg)`;
-                }, 100);
+            setTimeout(() => {
+                heart.style.top = '-10vh';
+                heart.style.transform = `rotate(${Math.random() * 360}deg)`;
+            }, 100);
 
-                // Remove after animation
-                setTimeout(() => { heart.remove(); }, 3000);
-            }
+            setTimeout(() => { heart.remove(); }, 3000);
         }
     </script>
 </body>
